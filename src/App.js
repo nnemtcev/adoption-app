@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom";
 
 // Components
@@ -9,24 +8,14 @@ import Pet from "./Pet";
 // or you can pass it multiple arguments (each argument being a separate child).
 
 const App = () => {
-  return React.createElement("div", {}, [
-    React.createElement("h1", {}, "Adopt Me!"),
-    React.createElement(Pet, {
-      name: "Luna",
-      animal: "Dog",
-      breed: "Havanese",
-    }),
-    React.createElement(Pet, {
-      name: "Pepper",
-      animal: "Bird",
-      breed: "Cockatiel",
-    }),
-    React.createElement(Pet, {
-      name: "Doink",
-      animal: "Cat",
-      breed: "Mix",
-    }),
-  ]);
+  return (
+    <div>
+      <h1>Adopt Me!</h1>
+      <Pet name={"Luna"} animal={"Dog"} breed={"Havanese"} />
+      <Pet name={"Pepper"} animal={"Bird"} breed={"Cockatiel"} />
+      <Pet name={"Doink"} animal={"Cat"} breed={"Mix"} />
+    </div>
+  );
 };
 
 // Note that we installed Prettier and ESLint using npm,
@@ -36,4 +25,4 @@ const App = () => {
 // Don't really understand though: why install Prettier
 // and ESLint extensions in VSCode? What do they do?
 
-ReactDOM.render(React.createElement(App), document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));
