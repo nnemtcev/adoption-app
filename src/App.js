@@ -1,13 +1,8 @@
-// You can pass props into a component like so.
-// Also, you could destructure the props in the parameters section of the function.
+import React from "react";
+import ReactDOM from "react-dom";
 
-const Pet = (props) => {
-  return React.createElement("div", {}, [
-    React.createElement("h1", {}, props.name),
-    React.createElement("h2", {}, props.animal),
-    React.createElement("h2", {}, props.breed),
-  ]);
-};
+// Components
+import Pet from "./Pet";
 
 // To pass multiple children into a component
 // you can either pass it multiple elements in an array,
@@ -33,5 +28,12 @@ const App = () => {
     }),
   ]);
 };
+
+// Note that we installed Prettier and ESLint using npm,
+// and then created separate configuration files for each.
+// Then we created npm commands that we could run to
+// format the files, and enforce certain rules in our code.
+// Don't really understand though: why install Prettier
+// and ESLint extensions in VSCode? What do they do?
 
 ReactDOM.render(React.createElement(App), document.getElementById("root"));
