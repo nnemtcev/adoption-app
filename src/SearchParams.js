@@ -1,6 +1,11 @@
-// We're using the useState hook for tracking location in the SearchParams component
+// We're using the useState hook for tracking location in the SearchParams component and
+// we're using the useEffect hook for running an effect (fetching initial list of pets).
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+// We'll be rendering pets.
+
+import Pet from "./Pet";
 
 // It's a constant, so we're making it uppercase.
 
@@ -12,9 +17,37 @@ const SearchParams = () => {
   // We're keeping track of the location and animal states.
 
   const [location, updateLocation] = useState("Seattle, WA");
+  const [pets, setPets] = useState([]);
   const [animal, updateAnimal] = useState("");
   const [breed, updateBreed] = useState("");
   const breeds = [];
+
+  // Running the useEffect hook only on the initial render,
+  // which is why we pass an empty dependency array as a second argument.
+
+  useEffect(() => {
+    requestPets();
+  }, []);
+
+  // An async function that fetches pets from the PetFinder API and then
+  // sets the relevant state using the fetched pets data.
+  // Also, note that every async function returns a promise.
+
+  async function requestPets() {
+    // Fetch data using the native fetch API.
+    const res = await fetch(
+      `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
+    );
+
+    // We're using await again because we want to resolve
+    // the promise returned by calling res.json() so that
+    // we can get access to the JSON pets data.
+    const json = await res.json();
+
+    // Setting the JSON data for pets which
+    // triggers a rerender of the SearchParams component.
+    setPets(json.pets);
+  }
 
   return (
     <div className="search-params">
@@ -67,6 +100,9 @@ const SearchParams = () => {
         </label>
         <button>Submit</button>
       </form>
+      {pets.map((pet) => (
+        <Pet {...pet} />
+      ))}
     </div>
   );
 };
