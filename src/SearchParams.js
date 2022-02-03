@@ -7,6 +7,10 @@ import { useState, useEffect } from "react";
 
 import Pet from "./Pet";
 
+// A custom hook that we created for fetching breeds of animals.
+
+import useBreedList from "./useBreedList";
+
 // It's a constant, so we're making it uppercase.
 
 const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
@@ -20,7 +24,7 @@ const SearchParams = () => {
   const [pets, setPets] = useState([]);
   const [animal, updateAnimal] = useState("");
   const [breed, updateBreed] = useState("");
-  const breeds = [];
+  const [breeds] = useBreedList(animal);
 
   // Running the useEffect hook only on the initial render,
   // which is why we pass an empty dependency array as a second argument.
@@ -32,6 +36,10 @@ const SearchParams = () => {
   // An async function that fetches pets from the PetFinder API and then
   // sets the relevant state using the fetched pets data.
   // Also, note that every async function returns a promise.
+  // Lastly, note that we're taking advantage of closures here,
+  // because requestPets() is a function defined within the SearchParams
+  // functional component. When the component returns the JSX, we still
+  // have access to the variables defined within the function.
 
   async function requestPets() {
     // Fetch data using the native fetch API.
